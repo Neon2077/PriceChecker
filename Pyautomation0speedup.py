@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import time
 import sqlite3
+import os
 print("Pyautomation0speedup imported. __name__ =", __name__)
 
 def scrapesunshine ():
@@ -10,7 +11,9 @@ def scrapesunshine ():
     page=1
     products = []
     session=requests.Session()
-    connect=sqlite3.connect(r"C:\Users\User\Documents\products.db")     #connection to database file
+    BASE_DIR = os.path.dirname(__file__)  # folder where ProductSearcher.py lives
+    DB_PATH = os.path.join(BASE_DIR, "products.db")
+    connect=sqlite3.connect(DB_PATH)     #connection to database file
     c = connect.cursor()        #cursor is like a tool in sqlite to perform action through python
     c.execute("""               
     CREATE TABLE IF NOT EXISTS products (
