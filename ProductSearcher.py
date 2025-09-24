@@ -17,8 +17,8 @@ def search(thing):
     if thing!="0":
         keywords = thing.split()
         sql="SELECT name, new_price, normal_price,old_price, stock, image,link FROM products WHERE"
-        sql+="AND".join(["name LIKE ?" for _ in keywords])      #SELECT * FROM products WHERE lower(name) LIKE '%100%' AND lower(name) LIKE '%plus%' AND lower(name) LIKE '%reduce%'
-        param=(f"%{x}%" for x in keywords)
+        sql+=" AND ".join([" name LIKE ?" for _ in keywords])      #SELECT * FROM products WHERE lower(name) LIKE '%100%' AND lower(name) LIKE '%plus%' AND lower(name) LIKE '%reduce%'
+        param=[f"%{x}%" for x in keywords]      #use list or tuple() only
         # c.execute("SELECT name, new_price, normal_price,old_price, stock, image,link FROM products WHERE name like ?",( f"%{thing}%",))  #tuple so remember ','    , use like with % to look for similar not exact
         c.execute(sql,param)
         for row in c.fetchall():
