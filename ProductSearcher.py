@@ -54,7 +54,7 @@ def search(thing):
                 items.append(item)
 
         # c.execute("SELECT name, final_price, normal_price, stock, link FROM lotusproducts WHERE name like ?",( f"%{thing}%",))  #tuple so remember ','    , use like with % to look for similar not exact
-        sql="SELECT name,final_price, normal_price, link FROM mydinproducts WHERE "        # space at the end is important
+        sql="SELECT name, final_price, normal_price, stock, link FROM lotusproducts WHERE "        # space at the end is important
         sql+=" AND ".join([" name LIKE ?" for _ in keywords])      #SELECT * FROM products WHERE lower(name) LIKE '%100%' AND lower(name) LIKE '%plus%' AND lower(name) LIKE '%reduce%'
         param=[f"%{x}%" for x in keywords]
         c.execute(sql,param)
