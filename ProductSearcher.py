@@ -7,9 +7,10 @@ from Pyautomation0api_data2 import scrapemydin
 # sunshine=pd.read_sql("SELECT sku, name,link, new_price, normal_price,stock,image FROM products", connect)     #not needed because pandas for data analysis and every item has diff sku and name among diff companies
 # mydin=pd.read_sql("SELECT sku, name,link, final_price, normal_price FROM mydinproducts", connect)
 # lotus=pd.read_sql("SELECT sku, name,link, final_price, normal_price,stock FROM lotusproducts", connect)
-
+BASE_DIR = os.path.dirname(__file__)  # folder where ProductSearcher.py lives
+DB_PATH = os.path.join(BASE_DIR, "products.db")
 def search(thing):
-    connect=sqlite3.connect(r"C:\Users\User\Documents\products.db")     #connection to database file
+    connect=sqlite3.connect(DB_PATH)     #connection to database file
     items=[]
     c = connect.cursor()
     # thing=input("Searching for things(if no input '0')? ")            #use api to give input
