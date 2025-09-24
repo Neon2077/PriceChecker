@@ -97,7 +97,7 @@ def scrapesunshine ():
                                             (data[b]['sku'], data[b]['name'], data[b]['link'], data[b]['brand'], data[b]['old_price'], data[b]['new_price'], data[b]['normal_price'],data[b]["stock"],data[b]['image']))
                                 connect.commit()
                                 print(data[b]['name'])
-                            except sqlite3.IntegrityError:
+                            except : #finish scrap prevent list out of index
                             # SKU exists → you can optionally update prices
                                 print(f"{data[b]['name']} already exist in database")
                                 pass
