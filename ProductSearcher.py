@@ -3,24 +3,24 @@ import sqlite3
 from Pyautomation0speedup import scrapesunshine
 from Pyautomation0api_data import scrapelotus
 from Pyautomation0api_data2 import scrapemydin
-import os
+
 # sunshine=pd.read_sql("SELECT sku, name,link, new_price, normal_price,stock,image FROM products", connect)     #not needed because pandas for data analysis and every item has diff sku and name among diff companies
 # mydin=pd.read_sql("SELECT sku, name,link, final_price, normal_price FROM mydinproducts", connect)
 # lotus=pd.read_sql("SELECT sku, name,link, final_price, normal_price,stock FROM lotusproducts", connect)
-BASE_DIR = os.path.dirname(__file__)  # folder where ProductSearcher.py lives
-DB_PATH = os.path.join(BASE_DIR, "products.db")
+
 def search(thing):
-    connect=sqlite3.connect(DB_PATH)     #connection to database file
+    connect=sqlite3.connect(r"C:\Users\User\PriceChecker\products.db")     #connection to database file
     items=[]
     c = connect.cursor()
     # thing=input("Searching for things(if no input '0')? ")            #use api to give input
     if thing!="0":
         keywords = thing.split()
-        sql="SELECT name, new_price, normal_price,old_price, stock, image,link FROM products WHERE "
+        sql="SELECT name, new_price, normal_price,old_price, stock, image,link FROM products WHERE "        # space at the end is important
         sql+=" AND ".join([" name LIKE ?" for _ in keywords])      #SELECT * FROM products WHERE lower(name) LIKE '%100%' AND lower(name) LIKE '%plus%' AND lower(name) LIKE '%reduce%'
         param=[f"%{x}%" for x in keywords]      #use list or tuple() only
         # c.execute("SELECT name, new_price, normal_price,old_price, stock, image,link FROM products WHERE name like ?",( f"%{thing}%",))  #tuple so remember ','    , use like with % to look for similar not exact
         c.execute(sql,param)
+
         for row in c.fetchall():
             name,discounted_price,normal_price,original_price,stock,image,link=row
             if normal_price is None:
@@ -34,8 +34,11 @@ def search(thing):
                 print(f"{name}, {finalprice0}, {stock}, {image}, {link} from SUNSHINE")
                 item={"Market":"SUNSHINE", "name":name,"final price":finalprice0,"stock":stock,"image":image,"link":link}
                 items.append(item)
-
-        c.execute("SELECT name,final_price, normal_price, link FROM mydinproducts WHERE name like ?",( f"%{thing}%",))  #tuple so remember ','    , use like with % to look for similar not exact
+        sql="SELECT name,final_price, normal_price, link FROM mydinproducts WHERE "        # space at the end is important
+        sql+=" AND ".join([" name LIKE ?" for _ in keywords])      #SELECT * FROM products WHERE lower(name) LIKE '%100%' AND lower(name) LIKE '%plus%' AND lower(name) LIKE '%reduce%'
+        param=[f"%{x}%" for x in keywords]
+        # c.execute("SELECT name,final_price, normal_price, link FROM mydinproducts WHERE name like ?",( f"%{thing}%",))  #tuple so remember ','    , use like with % to look for similar not exact
+        c.execute(sql,param)
         for row in c.fetchall():
             name,discounted_price,original_price,image=row
             if original_price == discounted_price:
@@ -50,7 +53,11 @@ def search(thing):
                 item={"Market":"MYDIN", "name":name,"final price":finalprice1, "original price":initialprice1, "image":image}
                 items.append(item)
 
-        c.execute("SELECT name, final_price, normal_price, stock, link FROM lotusproducts WHERE name like ?",( f"%{thing}%",))  #tuple so remember ','    , use like with % to look for similar not exact
+        # c.execute("SELECT name, final_price, normal_price, stock, link FROM lotusproducts WHERE name like ?",( f"%{thing}%",))  #tuple so remember ','    , use like with % to look for similar not exact
+        sql="SELECT name,final_price, normal_price, link FROM mydinproducts WHERE "        # space at the end is important
+        sql+=" AND ".join([" name LIKE ?" for _ in keywords])      #SELECT * FROM products WHERE lower(name) LIKE '%100%' AND lower(name) LIKE '%plus%' AND lower(name) LIKE '%reduce%'
+        param=[f"%{x}%" for x in keywords]
+        c.execute(sql,param)
         for row in c.fetchall():            #object is pack into tuple at c then print the object which is one tuple in c
             name,discounted_price,original_price,stock,image=row
             if original_price == discounted_price:
