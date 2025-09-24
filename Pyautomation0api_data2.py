@@ -4,12 +4,14 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 import sqlite3
 import json
 from urllib.parse import quote
+import os
 print("Pyautomation0(api data2) imported. __name__ =", __name__)
 def scrapemydin():
     page=1
     print("scraper2 function actually running")
-
-    connect=sqlite3.connect(r"C:\Users\User\Documents\products.db")     #connection to database file
+    BASE_DIR = os.path.dirname(__file__)  # folder where ProductSearcher.py lives
+    DB_PATH = os.path.join(BASE_DIR, "products.db")
+    connect=sqlite3.connect(DB_PATH)     #connection to database file
     c = connect.cursor()        #cursor is like a tool in sqlite to perform action through python
     c.execute("""
     CREATE TABLE IF NOT EXISTS mydinproducts (
