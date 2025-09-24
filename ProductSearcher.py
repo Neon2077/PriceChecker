@@ -3,7 +3,7 @@ import sqlite3
 from Pyautomation0speedup import scrapesunshine
 from Pyautomation0api_data import scrapelotus
 from Pyautomation0api_data2 import scrapemydin
-
+import os
 # sunshine=pd.read_sql("SELECT sku, name,link, new_price, normal_price,stock,image FROM products", connect)     #not needed because pandas for data analysis and every item has diff sku and name among diff companies
 # mydin=pd.read_sql("SELECT sku, name,link, final_price, normal_price FROM mydinproducts", connect)
 # lotus=pd.read_sql("SELECT sku, name,link, final_price, normal_price,stock FROM lotusproducts", connect)
