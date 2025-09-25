@@ -15,7 +15,9 @@ def search(thing: str):
 
 @app.get("/products")
 def view_all_products():
-    connect=sqlite3.connect(r"C:\Users\User\PriceChecker\products.db")
+    BASE_DIR = os.path.dirname(__file__)  # folder where ProductSearcher.py lives
+    DB_PATH = os.path.join(BASE_DIR, "products.db")
+    connect=sqlite3.connect(DB_PATH)
     c = connect.cursor()
     items1=[]
     c.execute("SELECT name, new_price, normal_price,old_price, stock, image,link FROM products")  #tuple so remember ','    , use like with % to look for similar not exact
