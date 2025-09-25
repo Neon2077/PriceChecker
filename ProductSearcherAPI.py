@@ -2,6 +2,7 @@
 from fastapi import FastAPI
 import ProductSearcher  
 import sqlite3
+import os
 app = FastAPI()
 
 @app.get("/")          # <-- add this
