@@ -12,3 +12,5 @@ It also includes a **Flutter mobile app** to view products locally.
 - **FastAPI + Render**: deploys a REST API that serves the scraped data from the server.
 - **Flutter App**: lets you view the products/prices on Android or iOS.
 
+## Download Link
+https://drive.google.com/file/d/1GoLXj6Q3dvg606H6S_Stm6QFghifdS_8/view?usp=sharing
